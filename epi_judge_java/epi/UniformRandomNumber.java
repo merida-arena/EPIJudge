@@ -2,21 +2,32 @@ package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.RandomSequenceChecker;
-import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 public class UniformRandomNumber {
   private static int zeroOneRandom() {
     Random gen = new Random();
     return gen.nextInt(2);
   }
 
+
+  // time: O(upperBound - lowerBound + 1)
+  // assuming method zeroOneRandom() takes O(1)
   public static int uniformRandom(int lowerBound, int upperBound) {
-    // TODO - you fill in here.
-    return 0;
+    int outcomes = upperBound - lowerBound + 1, result;
+
+    do{
+      result = 0;
+      for (int i = 0; (1<<i) < outcomes; i++){
+        result <<= 1;
+        result = result | zeroOneRandom();
+      }
+    } while (result >= outcomes);
+    return result + lowerBound;
   }
   private static boolean uniformRandomRunner(TimedExecutor executor,
                                              int lowerBound, int upperBound)

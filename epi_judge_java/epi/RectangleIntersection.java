@@ -2,7 +2,9 @@ package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
+
 public class RectangleIntersection {
+  // time : O(1)
   @EpiUserType(ctorParams = {int.class, int.class, int.class, int.class})
   public static class Rect {
     int x, y, width, height;
@@ -53,8 +55,17 @@ public class RectangleIntersection {
   }
   @EpiTest(testDataFile = "rectangle_intersection.tsv")
   public static Rect intersectRectangle(Rect r1, Rect r2) {
-    // TODO - you fill in here.
-    return new Rect(0, 0, 0, 0);
+    if (intersect(r1, r2)){
+      return new Rect(Math.max(r1.x, r2.x), Math.max(r1.y, r2.y),
+              Math.min(r1.x + r1.width, r2.x + r2.width) - Math.max(r1.x, r2.x),
+              Math.min(r1.y + r1.height, r2.y+ r2.height) - Math.max(r1.y, r2.y));
+    }
+    return new Rect(0, 0, -1, -1);
+  }
+
+  private static boolean intersect(Rect r1, Rect r2) {
+    return r1.x <= r2.x + r2.width && r1.x + r1.width >= r2.x
+            && r1.y <= r2.y + r2.height && r1.y + r1.height >= r2.y;
   }
 
   public static void main(String[] args) {
