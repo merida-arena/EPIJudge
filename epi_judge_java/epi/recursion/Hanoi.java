@@ -1,4 +1,4 @@
-package epi;
+package epi.recursion;
 
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
